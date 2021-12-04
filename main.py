@@ -20,7 +20,7 @@ def folder_process(folder):
             pass
 
 if __name__ == '__main__':
-    data = DataProcessing("data/", "42-rgb.png", True)
+    data = DataProcessing("data/", "test.png", True)
     data.segmentation_goal()
     data.image.save()
     # folder_process("data/")

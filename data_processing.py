@@ -57,7 +57,8 @@ class DataProcessing:
         """
         Detect vertical lines
         """
-        self.image.working_image = cv2.Canny(self.image.working_image, 100, 400)
+        self.image.working_image = cv2.Canny(self.image.working_image, 100, 200)
+        self.show_image()
 
     def _max_area(self, num_labels, stats):
         list = []
@@ -79,13 +80,13 @@ class DataProcessing:
             if stats[label][4] == area:
                 mask = np.array(labels, dtype=np.uint8)
                 mask[labels == label] = 255
-                [intX, intY, intW, intH] = cv2.boundingRect(mask)
-                print(intX, intY, intW, intH)
-                cv2.rectangle(mask,
-                              (intX, intY),  # upper left corner
-                              (intX + intW, intY + intH),  # lower right corner
-                              255,  # red
-                              0)
+                # [intX, intY, intW, intH] = cv2.boundingRect(mask)
+                # print(intX, intY, intW, intH)
+                # cv2.rectangle(mask,
+                #               (intX, intY),  # upper left corner
+                #               (intX + intW, intY + intH),  # lower right corner
+                #               255,  # red
+                #               0)
                 self.image.working_image = mask
                 self.show_image()
                 return;
@@ -104,8 +105,9 @@ class DataProcessing:
     def segmentation_goal(self):
         self._gray_scale()
         self._erode()
+        self._erode()
         self._median()
-        self._dilate()
+        # self._dilate()
         self._contours()
         self._max_area_components()
         self._dilate()
