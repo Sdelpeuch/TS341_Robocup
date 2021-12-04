@@ -10,7 +10,6 @@ Notre chaine de traitement prévisionnelle est composée de plusieurs modules. D
 
 ## Utilisation d'un réseau de neuronne pour trouver les buts
 
-Pour ce faire, nous avons utilisé un algorithme R-CNN, déjà pré-entrainées sur le dataset COCO. R-CNN est une méthode de detection d'objets trés fiable et robuste, c'est pour cette raison que nous nous sommes tournées vers cet algorithme.
 Dans le cadre du projet d'outils d'imagerie pour la robotique, nous avons pour objectif la reconnaissance du but sur un terrain de foot. Pour ce faire, nous avons utilisé un algorithme R-CNN, déjà pré-entrainées sur le dataset COCO. R-CNN est une méthode de detection d'objets trés fiable et robuste, c'est pour cette raison que nous nous sommes tournées vers cet algorithme. Il va pemrettre d'extraire de l'images les regions les plus suceptibles de contenir un objet(=zone d'interets).Pour chacune des zones d'interets, une boîte englobantes va être générés. Ces boites vont être classifiées et selectionnées en fontions de leurs probabilités de contenir l'objets. Ces images sont ensuite reçues en entrée par le CNN.Les avantages c'est qu'elles permettent de traiter morceaux par morceaux.Traiter l’image par morceau et non pas toute l’image comme pour un CNN simple et de pouvoir localiser plusieurs objets dans une image. C'est un traitement plus rapide et moins coûteux en puissance-machine.
 En entrée, il est donné à l'algorithme 579 images toutes labélisée par nos soins, issues des images données au début du projet.
 Un exemple d'image labélisé :
