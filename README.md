@@ -10,7 +10,7 @@ Notre chaine de traitement prévisionnelle est composée de plusieurs modules. D
 
 ## Utilisation d'un réseau de neuronne pour trouver les buts
 
-Dans le cadre du projet d'outils d'imagerie pour la robotique, nous avons pour objectif la reconnaissance du but sur un terrain de foot. Pour ce faire, nous avons utilisé le deep learning pour la détection d'objet dans une image. Nous allons utiliser des réseaux de neurones déjà entrainés tel que le R-CNN ou le mobilnet.  Ces réseaux sont déjà pré-entrainées sur le dataset COCO. R-CNN est un réseau de neurones trés fiable et robuste, c'est pour cette raison que nous nous sommes tournées vers ce genre de réseaux. Il va permettre d'extraire de l'images les regions les plus suceptibles de contenir un objet(=zone d'interets).Pour chacune des zones d'interets, une boîte englobantes va être générés. Ces boites vont être classifiées et selectionnées en fontions de leurs probabilités de contenir l'objets. Ces images sont ensuite reçues en entrée par le CNN.Les avantages c'est qu'elles permettent de traiter morceaux par morceaux.Traiter l’image par morceau et non pas toute l’image comme pour un CNN simple et de pouvoir localiser plusieurs objets dans une image. C'est un traitement plus rapide et moins coûteux en puissance-machine.
+Dans le cadre du projet d'outils d'imagerie pour la robotique, nous avons pour objectif la reconnaissance du but sur un terrain de foot. Pour ce faire, nous avons utilisé le deep learning pour la détection d'objet dans une image. Nous allons utiliser des réseaux de neurones déjà entrainés tel que le R-CNN ou le mobilnet.  Ces réseaux sont déjà pré-entrainées sur le dataset COCO. Le R-CNN est un algorithme de détection d'objet qui segmente l'image d'entrée pour trouver des zones délimitantes pertinentes, puis fait tourner un algorithme de détection pour trouver les objets les plus probables d'apparaître dans ces zones délimitantes. R-CNN est un réseau de neurones trés fiable et robuste, c'est pour cette raison que nous nous sommes tournées vers ce genre de réseaux. Il va permettre d'extraire de l'images les regions les plus suceptibles de contenir un objet(=zone d'interets).Pour chacune des zones d'interets, une boîte englobantes va être générés. Ces boites vont être classifiées et selectionnées en fontions de leurs probabilités de contenir l'objets. Ces images sont ensuite reçues en entrée par le CNN. Les avantages c'est qu'elles permettent de traiter morceaux par morceaux.
 En entrée, il est donné à l'algorithme 579 images toutes labélisée par nos soins, issues des images données au début du projet.
 Un exemple d'image labélisé :
 ![labelisation.png](readme_images/labelisation.png)
@@ -20,6 +20,8 @@ En entrée, il est donné à l'algorithme 579 images toutes labélisée par nos 
 
 
 En sortie de cette algorithme nous avons donc une image recadrée sur le but et la position (x,y) de(s) poteau(x) par rapport à l'image d'origine.
+
+L'entrainement de ce réseau avec notre dataset ce fera grâce à l'API TOD TF2 (qui utilise TensorFlow 2) que vous pouvez trouver [ici](https://github.com/cjlux/tod_tf2_tools)
 
 ## Traitement de l'image pour segmenter les buts
 
