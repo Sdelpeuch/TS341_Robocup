@@ -11,12 +11,11 @@ Notre chaine de traitement prévisionnelle est composée de plusieurs modules. D
 ## Utilisation d'un réseau de neuronne pour trouver les buts
 
 Dans le cadre du projet d'outils d'imagerie pour la robotique, nous avons pour objectif la reconnaissance du but sur un terrain de foot. Pour ce faire, nous avons utilisé le deep learning pour la détection d'objet dans une image. Nous allons utiliser des réseaux de neurones déjà entrainés de la famille des réseaux convolutionnels : le R-CNN ou le MobilNet.  Ces réseaux sont déjà pré-entrainées sur le dataset COCO. Le R-CNN est un algorithme de détection d'objet qui segmente l'image d'entrée pour trouver des zones délimitantes pertinentes, puis fait tourner un algorithme de détection pour trouver les objets les plus probables d'apparaître dans ces zones délimitantes. R-CNN est un réseau de neurones trés fiable et robuste, c'est pour cette raison que nous nous sommes tournées vers ce genre de réseaux. Il va permettre d'extraire de l'images les regions les plus suceptibles de contenir un objet(=zone d'interets).Pour chacune des zones d'interets, une boîte englobantes va être générés. Ces boites vont être classifiées et selectionnées en fontions de leurs probabilités de contenir l'objets.   
-En entrée, il est donné à l'algorithme 579 images toutes labélisée par nos soins, issues des images données au début du projet.  
-Nous avons décidé de détecter le bas des poteaux de but et non tout le but entier. En effet, sur certaines données il n'y a qu'un bout du but (1 poteau ou 2 poteaux sans le haut du but) mais il faut quand même détecter que cela est un but. Nous avons donc décidé de détecter le bas des poteaux puis nous recadrons la photo par rapport aux positions des boites englobantes détecté sur l'image. 
+
+En entrée, il est donné à l'algorithme 579 images toutes labélisée par nos soins, issues des images données au début du projet.La moitié des images sont tournée de 20° afin d'augmenter le nombre d'image en entrée : 20% sont utilisée en train (= permet d'entrainer le modèle) et 80% en test (= permet de mesurer l'erreur du modele final sur des données inconnues).  
 Un exemple d'image labélisé :  
 ![labelisation.png](readme_images/labelisation.png)
-La moitié des images sont tournée de 20° afin d'augmenter le nombre d'image en entrée : 20% sont utilisée en train (= permet
-d'entrainer le modèle) et 80% en test (= permet de mesurer l'erreur du modele final sur des données inconnues).
+Nous avons décidé de détecter le bas des poteaux de but et non tout le but entier. En effet, sur certaines données il n'y a qu'un bout du but (1 poteau ou 2 poteaux sans le haut du but) mais il faut quand même détecter que cela est un but. Nous avons donc décidé de détecter le bas des poteaux puis nous recadrons la photo par rapport aux positions des boites englobantes détecté sur l'image. 
 
 En sortie de cette algorithme nous avons donc une image recadrée sur le but et la position (x,y) de(s) poteau(x) par rapport à l'image d'origine.  
 
