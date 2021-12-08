@@ -1,0 +1,26 @@
+<annotation>
+	<folder>log4</folder>
+	<filename>6027.png</filename>
+	<path>/home/ta/projets/data/log4/6027.png</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>800</width>
+		<height>448</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>post</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>215</xmin>
+			<ymin>189</ymin>
+			<xmax>315</xmax>
+			<ymax>262</ymax>
+		</bndbox>
+	</object>
+</annotation>

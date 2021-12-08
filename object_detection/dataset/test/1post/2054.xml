@@ -1,0 +1,26 @@
+<annotation>
+	<folder>train</folder>
+	<filename>2054.png</filename>
+	<path>/home/ta/Bureau/train/2054.png</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>800</width>
+		<height>448</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>post</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>188</xmin>
+			<ymin>16</ymin>
+			<xmax>267</xmax>
+			<ymax>94</ymax>
+		</bndbox>
+	</object>
+</annotation>

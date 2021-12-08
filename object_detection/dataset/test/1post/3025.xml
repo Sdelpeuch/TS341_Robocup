@@ -1,0 +1,26 @@
+<annotation>
+	<folder>data</folder>
+	<filename>3025.png</filename>
+	<path>/home/ta/projets/data/data/3025.png</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>800</width>
+		<height>448</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>post</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>201</xmin>
+			<ymin>142</ymin>
+			<xmax>275</xmax>
+			<ymax>193</ymax>
+		</bndbox>
+	</object>
+</annotation>
