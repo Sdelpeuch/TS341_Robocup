@@ -3,9 +3,23 @@ from datetime import datetime
 
 from cv2 import cv2
 
-from DeepLearningProcessing import DeepLearningProcessing
-from Process import Process
 from data_processing import DataProcessing
+from deep_learning_processing import DeepLearningProcessing
+
+
+def process(data_processing):
+    """
+    Process the data with the classical image processing
+    :param data_processing: a data_processing object
+    :return: nothing
+    """
+    if data_processing.image.base_goal_1 == (-1, -1) and data_processing.image.base_goal_2 == (-1, -1):
+        return
+    elif (data_processing.image.base_goal_1 != (-1, -1) and data_processing.image.base_goal_2 == (-1, -1)) or (
+            data_processing.image.base_goal_1 == (-1, -1) and data_processing.image.base_goal_2 != (-1, -1)):
+        data_processing.segmentation_post()
+    elif data_processing.image.base_goal_1 != (-1, -1) and data_processing.image.base_goal_2 != (-1, -1):
+        data_processing.segmentation_goal()
 
 
 def folder_process(folder):
@@ -21,11 +35,10 @@ def folder_process(folder):
             begin = datetime.now()
             total += 1
             print("Process : " + filename)
-            data = DataProcessing(folder, filename, False)
+            data = DataProcessing(folder, filename)
             deepLearning = DeepLearningProcessing(data)
             deepLearning.predict()
-            process = Process(data)
-            process.process()
+            process(data)
             data.image.save()
             time.append(datetime.now() - begin)
         except Exception as e:
@@ -58,7 +71,6 @@ if __name__ == '__main__':
     # data = DataProcessing("object_detection/dataset/test/2post/", "5006.png", True)
     # deepLearning = DeepLearningProcessing(data)
     # deepLearning.predict()
-    # process = Process(data)
-    # process.process()
+    # process(data)
     # data.image.save()
     folder_process("data/")

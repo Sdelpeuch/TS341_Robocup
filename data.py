@@ -1,5 +1,7 @@
+"""
+This file contains the data class.
+"""
 from cv2 import cv2
-import matplotlib.pyplot as plt
 
 
 class Data:
