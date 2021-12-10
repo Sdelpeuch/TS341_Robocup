@@ -1,7 +1,7 @@
-from cv2 import cv2
 import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
+from cv2 import cv2
 from cv2.cv2 import mean
 
 from data import Data
@@ -115,13 +115,13 @@ class DataProcessing:
             self.show_image()
             return number
 
-    def _line_detection(self):
+    def _line_detection(self, threshold):
         """
         Detect vertical lines
         """
         y_position = 0
         for line in range(self.image.working_image.shape[0]):
-            if mean(self.image.working_image[line])[0] >= 2 * 255 / self.image.working_image.shape[1]:
+            if mean(self.image.working_image[line])[0] >= threshold * 255 / self.image.working_image.shape[1]:
                 return line
         return y_position
 
@@ -139,15 +139,19 @@ class DataProcessing:
                 break
         return x_left, x_right
 
-    def _reconstruct_one(self, number):
+    def _reconstruct_one(self, number, threshold):
         ret, self.image.working_image = cv2.threshold(self.image.working_image, 240, 255, cv2.THRESH_BINARY)
-        y_position = self._line_detection()
+        y_position = self._line_detection(threshold)
         x_left, x_right = self._column_detection(y_position)
         x_position = int((x_left + x_right) / 2)
+        width = 40
+
         if number == 1:
-            cv2.line(self.image.working_image, self.image.base_goal_1, (x_position, y_position), 255, 2)
+            if (abs(x_position - self.image.base_goal_1[1]) < 0.2*self.image.width):
+                cv2.line(self.image.working_image, self.image.base_goal_1, (x_position, y_position), 255, int(width))
         elif number == 2:
-            cv2.line(self.image.working_image, self.image.base_goal_2, (x_position, y_position), 255, 2)
+            if (abs(x_position - self.image.base_goal_2[1]) < 0.2*self.image.width):
+                cv2.line(self.image.working_image, self.image.base_goal_2, (x_position, y_position), 255, int(width))
 
     def _reconstruct_two(self):
         # Cut the image in two
@@ -156,14 +160,14 @@ class DataProcessing:
         sub_image_2 = self.image.working_image[0: self.image.working_image.shape[0],
                       self.image.working_image.shape[1] // 2: self.image.working_image.shape[1]]
         self.image.working_image = sub_image_1
-        self._reconstruct_one(1)
+        self._reconstruct_one(1, 2)
         sub_image_1 = self.image.working_image
         self.image.working_image = sub_image_2
         self.image.base_goal_2 = (self.image.base_goal_2[0] - self.image.width // 2, self.image.base_goal_2[1])
-        self._reconstruct_one(2)
+        self._reconstruct_one(2, 2)
         sub_image_2 = self.image.working_image
         self.image.base_goal_2 = (self.image.base_goal_2[0] + self.image.width // 2, self.image.base_goal_2[1])
-        self.image.working_image = np.zeros((self.image.height, self.image.width))
+        self.image.working_image = np.zeros((self.image.working_image.shape[0], self.image.working_image.shape[1] * 2))
         self.image.working_image[0: sub_image_1.shape[0], 0: sub_image_1.shape[1]] = sub_image_1
         self.image.working_image[0: sub_image_2.shape[0],
         sub_image_1.shape[1]: sub_image_1.shape[1] + sub_image_2.shape[1]] = sub_image_2
@@ -174,22 +178,33 @@ class DataProcessing:
         Reconstruct the goal position.
         """
         self._reconstruct_two()
-        y_position = self._line_detection()
-        x_left, x_right = self._column_detection(y_position)
+        y_position = self._line_detection(50)
         cv2.line(self.image.working_image, (self.image.base_goal_1[0], y_position),
-                 (self.image.base_goal_2[0], y_position), 255, 2)
+                 (self.image.base_goal_2[0], y_position), 255, int(0.01*self.image.width))
 
     def _superpose(self):
         """
         Superpose the image with the working image.
         """
-        ret, mask = cv2.threshold(self.image.working_image, 240, 255, cv2.THRESH_BINARY)
-        new_mask = np.zeros(mask.shape, dtype=np.uint8)
-        new_mask = cv2.cvtColor(new_mask, cv2.COLOR_GRAY2BGR)
-        new_mask[mask >= 180] = [0, 255, 0]
+
+        new_mask = np.zeros(self.image.working_image.shape, dtype=np.uint8)
+        new_mask = cv2.cvtColor(new_mask, cv2.COLOR_GRAY2RGB)
+        new_mask[self.image.working_image >= 180] = [0, 255, 0]
         self.image.working_image = cv2.addWeighted(self.image.base_image, 0.5, new_mask, 0.5, 0)
         self.image.working_image = cv2.addWeighted(self.image.working_image, 0.5, self.image.predict_image, 0.5, 0)
+        self.image.working_image = cv2.cvtColor(self.image.working_image, cv2.COLOR_BGR2RGB)
         self.show_image()
+
+    def _uncrop(self):
+        ret, mask = cv2.threshold(self.image.working_image, 240, 255, cv2.THRESH_BINARY)
+        empty_image = np.zeros((self.image.height, self.image.width), dtype=np.uint8)
+        try:
+            empty_image[0: self.image.cropped_coordinates[1],
+            self.image.cropped_coordinates[0]: self.image.cropped_coordinates[0] + mask.shape[1]] = mask
+        except ValueError:
+            empty_image[0: self.image.cropped_coordinates[1],
+            self.image.cropped_coordinates[0] - 1: self.image.cropped_coordinates[0] + mask.shape[1]] = mask
+        self.image.working_image = empty_image
 
     def segmentation_post(self):
         """
@@ -202,19 +217,21 @@ class DataProcessing:
         self._contours()
         self._max_area_components(1)
         self._dilate()
-        self._reconstruct_one(1)
+        self._uncrop()
+        self._reconstruct_one(1, 2)
         self._superpose()
 
     def segmentation_goal(self):
         """
         Segment the goal.
         """
-        self._gray_scale(175)
+        self._gray_scale(150)
         self._erode()
         self._median()
         self._contours()
         number = self._max_area_components(2)
         self._dilate()
+        self._uncrop()
         if number == 2:
             self._reconstruct_two()
         elif number == 3:

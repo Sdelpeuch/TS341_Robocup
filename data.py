@@ -1,4 +1,4 @@
-import cv2
+from cv2 import cv2
 import matplotlib.pyplot as plt
 
 
@@ -18,6 +18,7 @@ class Data:
         self.predict_image = self.base_image.copy()
         self.base_goal_1 = (-1, -1)
         self.base_goal_2 = (-1, -1)
+        self.cropped_coordinates = (-1, -1)
 
     def save(self):
         """

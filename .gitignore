@@ -139,6 +139,4 @@ dmypy.json
 cython_debug/
 
 tod_tf2/
-data/
-process/
 .idea

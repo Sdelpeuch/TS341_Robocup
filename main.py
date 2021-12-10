@@ -1,7 +1,7 @@
 import os
+from datetime import datetime
 
-import cv2
-import matplotlib.pyplot as plt
+from cv2 import cv2
 
 from DeepLearningProcessing import DeepLearningProcessing
 from Process import Process
@@ -12,19 +12,31 @@ def folder_process(folder):
     """
     Process all images in a folder
     """
+    total = 0
+    error = 0
+    general_begin = datetime.now()
+    time = []
     for filename in os.listdir(folder):
         try:
-            print(filename)
+            begin = datetime.now()
+            total += 1
+            print("Process : " + filename)
             data = DataProcessing(folder, filename, False)
-            deepLearning = DeepLearningProcessing(data.image)
-            deepLearning.predict((150, 300), (-1, -1))
+            deepLearning = DeepLearningProcessing(data)
+            deepLearning.predict()
             process = Process(data)
             process.process()
             data.image.save()
-        except cv2.error:
+            time.append(datetime.now() - begin)
+        except Exception as e:
+            print("\033[91m" + filename + str(e) + "\033[0m")
+            error += 1
             pass
-        except AttributeError:
-            pass
+
+    print("\033[92m" + "Total : " + str(total) + "\033[0m")
+    print("\033[91m" + "Error : " + str(error) + "\033[0m")
+    print("\033[92m" + "Time : " + str(datetime.now() - general_begin) + "\033[0m")
+    print("\033[92m" + "Average time : " + str(sum(time) / len(time)) + "\033[0m")
 
 
 def video(folder):
@@ -43,14 +55,10 @@ def video(folder):
 
 
 if __name__ == '__main__':
-    data = DataProcessing("data/", "test.png", False)
-    deepLearning = DeepLearningProcessing(data)
-    deepLearning.predict()
-    print(data.image.base_goal_1, data.image.base_goal_2)
-    process = Process(data)
-    process.process()
-    plt.imshow(data.image.working_image)
-    plt.show()
-    data.image.save()
-    # folder_process("data/")
-    # video("process/")
+    # data = DataProcessing("object_detection/dataset/test/2post/", "5006.png", True)
+    # deepLearning = DeepLearningProcessing(data)
+    # deepLearning.predict()
+    # process = Process(data)
+    # process.process()
+    # data.image.save()
+    folder_process("data/")
