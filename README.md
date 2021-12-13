@@ -2,15 +2,19 @@
 
 Dans le cadre du projet d'outils d'imagerie pour la robotique, nous avons pour objectif la reconnaissance du but sur un terrain de foot dans le cadre de la Robocup.
 
-Ce projet nécessite d'avoir l'api  TOD pour l'installer : [ROS5PRO TOD](https://learn.e.ros4.pro/fr/vision/object_detection_tf2/tod_install/)
+Ce projet nécessite d'avoir l'api TOD pour l'installer : [ROS5PRO TOD](https://learn.e.ros4.pro/fr/vision/object_detection_tf2/tod_install/)
 
-Pour simplement l'utiliser il est nécessaire d'activer l'environnement virtuel et de décompresser `tod_tf2.zip`. Les résultats de l'entraintement du réseau sont dans [object_detection](tod_tf2/object_detection/training/ssd_mobilnet/saved_model3).  
+Pour utiliser le projet il est aussi nécessaire d'avoir tensorflow 2.6 installé sur la machine. Tous les packages d'une environnement virtuel utilisé pour utiliser le projet sont présent dans `requirements.txt`.
 
-Pour voir les résultats du projet : [process](process1)
+Pour simplement l'utiliser il est nécessaire d'activer l'environnement virtuel et de décompresser `tod_tf2.zip`. Les résultats de l'entrainement du réseau sont dans [object_detection](tod_tf2/object_detection/training/ssd_mobilnet/saved_model3).
+
+Pour simplement voir les résultats du projet : [process](process1)
 
 Pour executer le projet sur une image : `python3 main.py photo <name>.png` où `name` est le nom d'une image dans le dossier `data`. L'image enregistrée sera dans le dossier `process`.
 
 Pour executer le projet sur le dossier data : `python3 main.py folder`. Les images seront dans le dossier `process`.
+
+Pour tout problème d'installation n'hésitez pas à nous contacter.
 
 ## Chaine de traitement globale
 
