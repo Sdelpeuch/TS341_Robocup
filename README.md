@@ -2,11 +2,11 @@
 
 Dans le cadre du projet d'outils d'imagerie pour la robotique, nous avons pour objectif la reconnaissance du but sur un terrain de foot dans le cadre de la Robocup.
 
-Ce projet nécessite d'avoir l'api TOD pour l'installer : [ROS5PRO TOD](https://learn.e.ros4.pro/fr/vision/object_detection_tf2/tod_install/)
-
 Pour utiliser le projet il est aussi nécessaire d'avoir tensorflow 2.6 installé sur la machine. Tous les packages d'une environnement virtuel utilisé pour utiliser le projet sont présent dans `requirements.txt`.
 
 Pour simplement l'utiliser il est nécessaire d'activer l'environnement virtuel et de décompresser `tod_tf2.zip`. Les résultats de l'entrainement du réseau sont dans [object_detection](tod_tf2/object_detection/training/ssd_mobilnet/saved_model3).
+
+Ce projet nécessite d'avoir l'api TOD pour réentrainer le réseau pour l'installer : [ROS5PRO TOD](https://learn.e.ros4.pro/fr/vision/object_detection_tf2/tod_install/)
 
 Pour simplement voir les résultats du projet : [process](process1)
 
