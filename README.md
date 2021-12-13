@@ -2,6 +2,14 @@
 
 Dans le cadre du projet d'outils d'imagerie pour la robotique, nous avons pour objectif la reconnaissance du but sur un terrain de foot dans le cadre de la Robocup.
 
+## Membres
+
+- BARRAIS Marius 
+- BRISSAUD Cloé
+- CONSTANS PROTOPAPPAS Théa
+- DELPEUCH Sébastien 
+
+
 ## Installation
 
 Pour utiliser le projet il est aussi nécessaire d'avoir tensorflow 2.6 installé sur la machine. Tous les packages d'une environnement virtuel utilisé pour utiliser le projet sont présent dans `requirements.txt`.
