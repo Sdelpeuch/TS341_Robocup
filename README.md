@@ -16,10 +16,9 @@ Pour executer le projet sur le dossier data : `python3 main.py folder`. Les imag
 
 Pour tout problème d'installation n'hésitez pas à nous contacter.
 
-Le dossier `data` contient les images à traiter, le dossier `process` est un dossier recevant les images après traitement, le dossier `process1` est une sauvegarde des résultats du projet. 
+Le dossier `data` contient les images à traiter, le dossier `process` est un dossier recevant les images après traitement, le dossier `process1` est une sauvegarde des résultats du projet. Le dossier `object_detection` contient les résultats du réseau.
 
 Le fichier `main.py` est le fichier principal du projet permettant d'exécuter le projet avec les commandes ci dessus. Le fichier `data.py` permet de représenter les données, `data_processing.py` de réaliser le traitement d'image classique et `deep_learning_processing.py` de réaliser la prédiction du réseau de neurone sur une image.
-
 
 ## Chaine de traitement globale
 
