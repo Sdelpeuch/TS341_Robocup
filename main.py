@@ -1,4 +1,5 @@
 import os
+import sys
 from datetime import datetime
 
 from cv2 import cv2
@@ -68,9 +69,11 @@ def video(folder):
 
 
 if __name__ == '__main__':
-    # data = DataProcessing("object_detection/dataset/test/2post/", "5006.png", True)
-    # deepLearning = DeepLearningProcessing(data)
-    # deepLearning.predict()
-    # process(data)
-    # data.image.save()
-    folder_process("data/")
+    if sys.argv[1] == "photo":
+        data = DataProcessing("data/", sys.argv[2], True)
+        deepLearning = DeepLearningProcessing(data)
+        deepLearning.predict()
+        process(data)
+        data.image.save()
+    if sys.argv[1] == "folder":
+        folder_process("data/")
